@@ -1,0 +1,30 @@
+name: publish_notebook
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: write
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.4'
+      - name: Install nbconvert
+        run: |
+          pip install nbconvert
+      - name: Generate html file
+        run: |
+          mkdir _page
+          jupyter nbconvert project.ipynb --template lab --to html --theme dark --output _page\project.html
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        with:
+          publish_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _page/
+          force_orphan: true
