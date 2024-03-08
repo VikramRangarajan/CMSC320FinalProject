@@ -19,7 +19,7 @@ jobs:
       - name: Generate html file
         run: |
           mkdir _page
-          jupyter nbconvert project.ipynb --template lab --to html --theme dark --output _page\project.html
+          jupyter nbconvert project.ipynb --template lab --to html --theme dark --output _page/project.html
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
