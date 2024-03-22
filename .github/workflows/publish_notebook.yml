@@ -20,6 +20,7 @@ jobs:
         run: |
           mkdir _page
           jupyter nbconvert project.ipynb --template lab --to html --theme dark --output _page/index.html
+          sed -i 's/<title>project<\/title>/<title>CMSC320 Final Project<\/title>/g' _page/index.html
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
