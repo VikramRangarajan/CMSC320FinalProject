@@ -163,3 +163,5 @@ cython_debug/
 *.parquet
 *.zip
 _page
+models--sentence-transformers--all-MiniLM-L6-v2/*
+*.npz
